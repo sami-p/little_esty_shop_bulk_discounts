@@ -117,6 +117,12 @@ RSpec.describe 'merchant dashboard' do
   end
 
   describe 'Bulk Discounts' do
+    before :each do
+      @discount_1 = @merchant1.discounts.create!(percent: 10, quantity_threshold: 5)
+      @discount_2 = @merchant1.discounts.create!(percent: 15, quantity_threshold: 10)
+      @discount_3 = @merchant1.discounts.create!(percent: 20, quantity_threshold: 15)
+      @discount_4 = @merchant1.discounts.create!(percent: 25, quantity_threshold: 20)
+    end
     # As a merchant
     # When I visit my merchant dashboard
     # Then I see a link to view all my discounts
@@ -127,9 +133,9 @@ RSpec.describe 'merchant dashboard' do
     # And each bulk discount listed includes a link to its show page
 
     it 'displays a link to view all my discounts' do
-      expect(page).to have_link("Shop My Discounts")
+      expect(page).to have_link("Shop Our Discounts")
 
-      click_link "Shop My Discounts"
+      click_link "Shop Our Discounts"
 
       expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
     end
