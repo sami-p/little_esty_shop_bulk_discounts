@@ -73,5 +73,9 @@ RSpec.describe 'Bulk Discounts Index page' do
     expect(page).to have_link("Shop #{@discount_2.percent}% Off")
     expect(page).to have_link("Shop #{@discount_3.percent}% Off")
     expect(page).to have_link("Shop #{@discount_4.percent}% Off")
+
+    click_link "Shop #{@discount_3.percent}% Off"
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount_3.id}")
   end
 end
