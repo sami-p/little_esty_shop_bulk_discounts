@@ -1,7 +1,12 @@
-<%= form_with url: "/merchants/#{@merchant.id}/discounts", method: :post, local: true do |form| %>
+<%= form_with url: "/merchant/#{@merchant.id}/discounts", method: :post, local: true do |form| %>
   <%= form.label :percent %>
+  <br>
   <%= form.text_field :percent %></br>
+  <br>
   <%= form.label :quantity_threshold, "Quantity Threshold" %>
+  <br>
   <%= form.text_field :quantity_threshold %></br>
+  <br>
   <%= form.submit 'Add Discount' %>
+  <br>
 <% end %>

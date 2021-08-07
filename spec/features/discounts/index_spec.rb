@@ -104,6 +104,20 @@ RSpec.describe 'Bulk Discounts Index page' do
   it 'displays a link to create a new discount' do
     click_link "Create New Discount"
 
-    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/new")
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+
+    fill_in "Percent", with: 30
+    fill_in "Quantity Threshold", with: 25
+    click_button "Add Discount"
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+    expect(page).to have_content("Shop 30% Off 25 items")
+  end
+
+  xit 'will not accept new discount without valid data' do
+    click_link "Create New Discount"
+
+    fill_in "Percent", with: 0
+    fill_in "Quantity Threshold", with: "Hello"
   end
 end

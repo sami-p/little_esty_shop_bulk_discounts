@@ -12,6 +12,21 @@ class DiscountsController < ApplicationController
 
   def new
     @merchant = Merchant.find(params[:merchant_id])
-    @discount = Discount.new
+  end
+
+  def create
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = @merchant.discounts.new(discount_params)
+    if @discount.save
+      redirect_to "/merchant/#{@merchant.id}/discounts"
+    else
+      flash[:alert] = "We kindly ask that you fill out the form with the correct information before submitting."
+      redirect_to "/merchant/#{@merchant.id}/discounts/new"
+    end
+  end
+
+  private
+  def discount_params
+    params.permit(:percent, :quantity_threshold)
   end
 end
