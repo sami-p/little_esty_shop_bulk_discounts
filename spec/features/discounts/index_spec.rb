@@ -114,10 +114,26 @@ RSpec.describe 'Bulk Discounts Index page' do
     expect(page).to have_content("Shop 30% Off 25 items")
   end
 
-  xit 'will not accept new discount without valid data' do
+  it 'will not accept new discount without valid data' do
+    click_link "Create New Discount"
+
+    fill_in "Quantity Threshold", with: "Hello"
+
+    click_button "Add Discount"
+
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+    expect(page).to have_content("We kindly ask that you fill out the form with the correct information before submitting.")
+  end
+
+  it 'will not accept new discount if percent is 0' do
     click_link "Create New Discount"
 
     fill_in "Percent", with: 0
-    fill_in "Quantity Threshold", with: "Hello"
+    fill_in "Quantity Threshold", with: 10
+
+    click_on "Add Discount"
+
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+    expect(page).to have_content("We kindly ask that you fill out the form with the correct information before submitting.")
   end
 end
