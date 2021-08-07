@@ -1,0 +1,6 @@
+<h1>Welcome to SALE SEASON!</h1>
+<h3>Current Discounts:</h3>
+<p> <% @discounts.each do |discount| %> </p>
+  <%= discount.percent %>
+  <%= discount.quantity_threshold %>
+<% end %>
