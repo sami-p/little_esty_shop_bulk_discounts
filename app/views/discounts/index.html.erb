@@ -3,3 +3,5 @@
 <p> <% @merchant.discounts.each do |discount| %> </p>
   <%= link_to "Shop #{discount.percent}% Off", "/merchant/#{@merchant.id}/discounts/#{discount.id}" %> <%= discount.quantity_threshold %> items
 <% end %>
+<h2>Upcoming Holidays</h2>
+<%= link_to "Create New Discount", "/merchant/#{@merchant.id}/discounts/new" %>

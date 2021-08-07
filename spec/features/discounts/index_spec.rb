@@ -78,4 +78,32 @@ RSpec.describe 'Bulk Discounts Index page' do
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount_3.id}")
   end
+
+  # As a merchant
+  # When I visit the discounts index page
+  # I see a section with a header of "Upcoming Holidays"
+  # In this section the name and date of the next 3 upcoming US holidays are listed.
+  #
+  # Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
+
+  xit 'displays an Upcoming Holidays section with name and date of 3 holidays' do
+    expect(page).to have_content("Upcoming Holidays")
+    # curl -X GET "https://date.nager.at/api/v2/NextPublicHolidays/US" -H  "accept: text/plain"
+    # https://date.nager.at/api/v2/NextPublicHolidays/US
+  end
+
+  # As a merchant
+  # When I visit my bulk discounts index
+  # Then I see a link to create a new discount
+  # When I click this link
+  # Then I am taken to a new page where I see a form to add a new bulk discount
+  # When I fill in the form with valid data
+  # Then I am redirected back to the bulk discount index
+  # And I see my new bulk discount listed
+
+  it 'displays a link to create a new discount' do
+    click_link "Create New Discount"
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/new")
+  end
 end
