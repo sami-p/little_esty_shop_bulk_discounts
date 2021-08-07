@@ -123,6 +123,7 @@ RSpec.describe 'merchant dashboard' do
       @discount_3 = @merchant1.discounts.create!(percent: 20, quantity_threshold: 15)
       @discount_4 = @merchant1.discounts.create!(percent: 25, quantity_threshold: 20)
     end
+
     # As a merchant
     # When I visit my merchant dashboard
     # Then I see a link to view all my discounts

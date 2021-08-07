@@ -1,5 +1,5 @@
 <h1>Welcome to SALE SEASON!</h1>
 <h3>Current Discounts:</h3>
-<p> <% @discounts.each do |discount| %> </p>
-  <%= discount.percent %>% off <%= discount.quantity_threshold %> items
+<p> <% @merchant.discounts.each do |discount| %> </p>
+  <%= link_to "Shop #{discount.percent}% Off", "/merchant/#{@merchant.id}/discounts/#{discount.id}" %> <%= discount.quantity_threshold %> items
 <% end %>
