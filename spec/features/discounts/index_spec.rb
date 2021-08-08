@@ -131,9 +131,28 @@ RSpec.describe 'Bulk Discounts Index page' do
     fill_in "Percent", with: 0
     fill_in "Quantity Threshold", with: 10
 
-    click_on "Add Discount"
+    click_button "Add Discount"
 
     expect(current_path).to eq(new_merchant_discount_path(@merchant1))
     expect(page).to have_content("We kindly ask that you fill out the form with the correct information before submitting.")
+  end
+
+  # As a merchant
+  # When I visit my bulk discounts index
+  # Then next to each bulk discount I see a link to delete it
+  # When I click this link
+  # Then I am redirected back to the bulk discounts index page
+  # And I no longer see the discount listed
+
+  it 'displays a link per discount to delete that discount' do
+    expect(page).to have_link("Delete #{@discount_1.percent}% Discount")
+    expect(page).to have_link("Delete #{@discount_2.percent}% Discount")
+    expect(page).to have_link("Delete #{@discount_3.percent}% Discount")
+    expect(page).to have_link("Delete #{@discount_4.percent}% Discount")
+
+    click_link "Delete #{@discount_3.percent}% Discount"
+    
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+    expect(page).to_not have_content("Shop #{@discount_3.percent}% Off")
   end
 end
