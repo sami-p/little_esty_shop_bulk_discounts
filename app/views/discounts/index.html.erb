@@ -5,4 +5,8 @@
   <%= link_to "Delete #{discount.percent}% Discount", "/merchant/#{@merchant.id}/discounts/#{discount.id}", method: :delete %>
 <% end %>
 <h2>Upcoming Holidays</h2>
+<% upcoming_holidays.first_three.each do |holiday| %>
+<%= holiday[:name] %> <%= holiday[:date] %>
+<br></br>
+<% end %>
 <%= link_to "Create New Discount", "/merchant/#{@merchant.id}/discounts/new" %>

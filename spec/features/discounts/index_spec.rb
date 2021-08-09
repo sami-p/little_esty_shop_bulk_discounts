@@ -86,10 +86,14 @@ RSpec.describe 'Bulk Discounts Index page' do
   #
   # Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
 
-  xit 'displays an Upcoming Holidays section with name and date of 3 holidays' do
+  it 'displays an Upcoming Holidays section with name and date of 3 holidays' do
     expect(page).to have_content("Upcoming Holidays")
-    # curl -X GET "https://date.nager.at/api/v2/NextPublicHolidays/US" -H  "accept: text/plain"
-    # https://date.nager.at/api/v2/NextPublicHolidays/US
+    expect(page).to have_content("Labour Day")
+    expect(page).to have_content("2021-09-06")
+    expect(page).to have_content("Columbus Day")
+    expect(page).to have_content("2021-10-11")
+    expect(page).to have_content("Veterans Day")
+    expect(page).to have_content("2021-11-11")
   end
 
   # As a merchant
@@ -151,7 +155,7 @@ RSpec.describe 'Bulk Discounts Index page' do
     expect(page).to have_link("Delete #{@discount_4.percent}% Discount")
 
     click_link "Delete #{@discount_3.percent}% Discount"
-    
+
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
     expect(page).to_not have_content("Shop #{@discount_3.percent}% Off")
   end
