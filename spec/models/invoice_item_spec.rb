@@ -132,6 +132,7 @@ RSpec.describe InvoiceItem, type: :model do
 
       expect(@ii_8.apply_discount?).to eq(true)
       expect(@ii_9.apply_discount?).to eq(true)
+      expect(@ii_11.apply_discount?).to eq(false)
 
       expect(@ii_8.select_discount).to eq(discount_1)
       expect(@ii_9.select_discount).to eq(discount_1)
