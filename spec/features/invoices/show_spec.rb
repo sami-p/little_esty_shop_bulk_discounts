@@ -87,7 +87,7 @@ RSpec.describe 'invoices show' do
 
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    save_and_open_page
+
     within("#the-status-#{@ii_1.id}") do
       page.select("cancelled")
       click_button "Update Invoice"
@@ -100,14 +100,29 @@ RSpec.describe 'invoices show' do
      end
   end
 
-    # Merchant Invoice Show Page: Total Revenue and Discounted Revenue
-
-    # As a merchant
-    # When I visit my merchant invoice show page
-    # Then I see the total revenue for my merchant from this invoice (not including discounts)
-    # And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
-
   it 'displays total discounted revenue for merchant from this invoice' do
+    discount_1 = @merchant1.discounts.create!(percent: 20, quantity_threshold: 10)
+    discount_2 = @merchant1.discounts.create!(percent: 30, quantity_threshold: 15)
+    discount_3 = @merchant2.discounts.create!(percent: 15, quantity_threshold: 5)
+    
+    visit merchant_invoice_path(@merchant1, @invoice_1)
 
+    expect(page).to have_content(@invoice_1.discounted_revenue)
+  end
+
+  # As a merchant
+  # When I visit my merchant invoice show page
+  # Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+
+  it 'it displays a link to the show page of applied discounts per invoice item' do
+    discount_1 = @merchant1.discounts.create!(percent: 20, quantity_threshold: 10)
+    discount_2 = @merchant1.discounts.create!(percent: 30, quantity_threshold: 15)
+    discount_3 = @merchant2.discounts.create!(percent: 15, quantity_threshold: 5)
+
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    save_and_open_page
+    click_link "Discount"
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{discount_1.id}")
   end
 end
