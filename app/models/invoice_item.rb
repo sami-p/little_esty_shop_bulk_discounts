@@ -17,11 +17,15 @@ class InvoiceItem < ApplicationRecord
 
   def apply_discount?
     merchant = Merchant.where("id = ?", item.merchant_id)
-    self.quantity >= merchant.first.discounts.minimum(:quantity_threshold)
+    if merchant.first.discounts.empty?
+      false
+    else
+      self.quantity >= merchant.first.discounts.minimum(:quantity_threshold)
+    end
   end
 
   def select_discount
     merchant = Merchant.where("id = ?", item.merchant_id).first
-    wip = merchant.discounts.where("quantity_threshold <= ?", self.quantity).order('percent DESC').first
+    merchant.discounts.where("quantity_threshold <= ?", self.quantity).order('percent DESC').first
   end
 end
