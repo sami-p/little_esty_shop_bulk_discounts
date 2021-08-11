@@ -15,22 +15,6 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  # invoice items
-    # unit price
-    # quantity
-    # item_id
-
-  # merchant
-    # id
-
-  # item
-    # merchant_id
-
-  # discount
-    # percent
-    # quantity threshold
-    # merchant_id
-
   def apply_discount?
     merchant = Merchant.where("id = ?", item.merchant_id)
     self.quantity >= merchant.first.discounts.minimum(:quantity_threshold)
