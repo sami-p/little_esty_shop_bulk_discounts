@@ -78,4 +78,16 @@ RSpec.describe 'Discount Show page' do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount.id}")
     expect(page).to have_content("Get 20% Off 15 Items Today!")
   end
+
+  it 'will display error message if not editted correctly' do
+    click_link "Edit Discount"
+
+    fill_in "Percent", with: " "
+    fill_in "Quantity Threshold", with: 15
+
+    click_on "Update Discount"
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount.id}/edit")
+    expect(page).to have_content("Please make sure you have correctly editted your discount before submitting. Thank you!")
+  end
 end
