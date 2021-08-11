@@ -104,7 +104,7 @@ RSpec.describe 'invoices show' do
     discount_1 = @merchant1.discounts.create!(percent: 20, quantity_threshold: 10)
     discount_2 = @merchant1.discounts.create!(percent: 30, quantity_threshold: 15)
     discount_3 = @merchant2.discounts.create!(percent: 15, quantity_threshold: 5)
-    
+
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content(@invoice_1.discounted_revenue)
@@ -120,7 +120,7 @@ RSpec.describe 'invoices show' do
     discount_3 = @merchant2.discounts.create!(percent: 15, quantity_threshold: 5)
 
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    save_and_open_page
+
     click_link "Discount"
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{discount_1.id}")
